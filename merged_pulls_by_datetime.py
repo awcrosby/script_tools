@@ -50,9 +50,9 @@ def main():
     all_events = [e for e in all_events if e['event'] in ('merged')]
 
     for event in all_events:
-        print("- `%s %s <%s>`_" % (
-            event['issue']['number'],
+        print("- %s `#%s <%s>`_" % (
             event['issue']['title'],
+            event['issue']['number'],
             event['issue']['html_url']))
 
 
