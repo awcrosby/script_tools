@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MRs Gitlab</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="htmx, mustache, gitlab">
+    <meta name="description" content="Single page HTML to query a JSON endpoint like
+    gitlab open MRs and load result into template with custom layout of data and links.
+    Uses HTMX to handle JSON client-side (not standard use of HTMX), and mustache templating.">
+    <meta name="viewport" content="width=device-width">
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/client-side-templates.js"></script>
+    <script src="https://unpkg.com/mustache@latest"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #cccccc;
+            margin: 40px 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: #eeeeee;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card .title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .card .title a {
+            text-decoration: none;
+            color: inherit; /* Inherits the color of the parent element */
+        }
+
+        .card .title a:hover {
+            text-decoration: underline;
+        }
+
+        .card .info {
+            font-size: 14px;
+            color: #586069;
+        }
+
+        .card .icon {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div hx-ext="client-side-templates">
+        <div hx-get="https://GITLAB_HOST/api/v4/projects/:id/merge_requests?state=opened"
+            hx-headers='{"Authorization": "Bearer TOKEN"}'
+            hx-trigger="load"
+            mustache-template="container-items"></div>
+    </div>
+</body>
+
+<template id="container-items">
+    <div class="container">
+        <!-- {{#.}} -->
+            <div class="card">
+                <div class="title">
+                    <span class="icon">📝</span><a href="{{web_url}}/commits">{{ title }}</a>
+                </div>
+                <div class="info">
+                    {{ description }} • {{ source_branch }} <a href="https://GITLAB_PROJECT_HTML_ROOT/-/tree/{{source_branch}}">➡️</a>
+                </div>
+            </div>
+        <!-- {{/.}} -->
+    </div>
+</template>
+
+</html>
