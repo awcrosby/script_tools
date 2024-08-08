@@ -61,7 +61,7 @@
 
 <body>
     <div hx-ext="client-side-templates">
-        <div hx-get="https://GITLAB_HOST/api/v4/projects/:id/merge_requests?state=opened"
+        <div hx-get="https://jsonplaceholder.typicode.com/todos"
             hx-headers='{"Authorization": "Bearer TOKEN"}'
             hx-trigger="load"
             mustache-template="container-items"></div>
@@ -76,7 +76,7 @@
                     <span class="icon">📝</span><a href="{{web_url}}/commits">{{ title }}</a>
                 </div>
                 <div class="info">
-                    {{ description }} • {{ source_branch }} <a href="https://GITLAB_PROJECT_HTML_ROOT/-/tree/{{source_branch}}">➡️</a>
+                    {{ id }} • {{ completed }} <a href="https://GITLAB_PROJECT_HTML_ROOT/-/tree/{{source_branch}}">➡️</a>
                 </div>
             </div>
         <!-- {{/.}} -->
